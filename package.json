@@ -1,0 +1,16 @@
+{
+  "name": "edusearch-ai",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:ml\" \"npm run dev:client\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev:ml": "cd ml-service && source ../.venv/bin/activate 2>/dev/null || true && uvicorn main:app --reload --port 8000",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "build": "cd client && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

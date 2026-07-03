@@ -4,3 +4,11 @@ backgroundColor = "#f8f9fb"
 secondaryBackgroundColor = "#f1f5f9"
 textColor = "#111827"
 primaryColor = "#1d4ed8"
+
+[browser]
+gatherUsageStats = false
+
+[server]
+maxUploadSize = 200
+enableCORS = false
+enableXsrfProtection = false
