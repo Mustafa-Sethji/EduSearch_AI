@@ -5,6 +5,7 @@ import os
 import sys
 import shutil
 import tempfile
+import uvicorn  # Added for production startup
 from pathlib import Path
 
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
@@ -27,6 +28,8 @@ from models.classifiers import (
 from utils.store import save, load, exists, clear
 
 app = FastAPI(title="EduSearch ML Service", version="1.0.0")
+
+# Updated CORS for production flexibility
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -238,3 +241,8 @@ def analytics(book_id: int):
 def delete_index(book_id: int):
     delete_book_artifacts(book_id)
     return {"deleted": True}
+
+# Start the server using uvicorn
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
