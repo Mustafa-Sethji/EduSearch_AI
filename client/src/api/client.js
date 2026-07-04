@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
-const api = axios.create({ baseURL: '/api' });
+// We use import.meta.env.VITE_API_URL for production (Vercel)
+// and fallback to localhost:5000/api for your local development.
+const api = axios.create({ 
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api' 
+});
 
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
