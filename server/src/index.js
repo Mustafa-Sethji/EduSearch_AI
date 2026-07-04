@@ -46,7 +46,7 @@ async function start() {
   try {
     await sequelize.authenticate();
     // In production, sync might be slow, but for final year project it's fine
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ alter: false });
     console.log('MySQL connected');
     
     // IMPORTANT: added '0.0.0.0' to allow external connections
