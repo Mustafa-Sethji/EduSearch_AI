@@ -1,3 +1,8 @@
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const sequelize = new Sequelize(
   process.env.DB_NAME || 'edusearch',
   process.env.DB_USER || 'root',
@@ -8,7 +13,6 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
     logging: process.env.NODE_ENV === 'development' ? console.log : false,
     pool: { max: 10, min: 0, acquire: 30000, idle: 10000 },
-    // ADD THIS BLOCK BELOW
     dialectOptions: {
       ssl: {
         rejectUnauthorized: true,
@@ -16,3 +20,5 @@ const sequelize = new Sequelize(
     }
   }
 );
+
+export default sequelize; // <--- MAKE SURE THIS IS HERE
