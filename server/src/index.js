@@ -39,14 +39,20 @@ io.on('connection', (socket) => {
   socket.on('leave-book', (bookId) => socket.leave(`book-${bookId}`));
 });
 
-const PORT = process.env.PORT || 5000;
+// Render sets the PORT environment variable automatically
+const PORT = process.env.PORT || 10000;
 
 async function start() {
   try {
     await sequelize.authenticate();
+    // In production, sync might be slow, but for final year project it's fine
     await sequelize.sync({ alter: true });
     console.log('MySQL connected');
-    httpServer.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    
+    // IMPORTANT: added '0.0.0.0' to allow external connections
+    httpServer.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   } catch (err) {
     console.error('Failed to start:', err.message);
     process.exit(1);
